@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import Header from "./Header";
-
-type Theme = "light" | "dark";
+import type { Theme } from "../types";
 
 type UserDashboardLayoutProps = {
   children: ReactNode;
@@ -24,7 +23,9 @@ export default function UserDashboardLayout({
           theme={theme}
           isMobile={isMobile}
         />
-        <section className="flex-1 max-w-200 flex flex-col px-5 py-15 space-y-8">
+        <section
+          className={`${isMobile ? "max-w-100" : "max-w-200"} flex-1  flex flex-col px-5 py-15 space-y-8`}
+        >
           {children}
         </section>
       </main>

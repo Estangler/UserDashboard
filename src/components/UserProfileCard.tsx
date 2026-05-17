@@ -40,6 +40,7 @@ type UserProfileCardProps = {
   isEmpty: boolean;
   isLoading: boolean;
   user: APIType | null;
+  isMobile: boolean;
 };
 
 export default function UserProfileCard({
@@ -47,6 +48,7 @@ export default function UserProfileCard({
   isError,
   isLoading,
   user,
+  isMobile,
 }: UserProfileCardProps) {
   if (isError) {
     return <ErrorState />;
@@ -78,8 +80,9 @@ export default function UserProfileCard({
               <p className="text-sm text-slate-400">Front End Developer</p>
             </div>
           </div>
-
-          <div className="flex justify-between gap-3 p-8 text-sm">
+          <div
+            className={`${isMobile ? "flex flex-col" : "flex"} justify-between gap-3 p-8 text-sm`}
+          >
             <UserInfoItem label={"Nome Completo"}>{user?.name}</UserInfoItem>
             <UserInfoItem label={"Empresa"}>
               <div className="flex items-center gap-2">

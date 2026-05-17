@@ -1,6 +1,6 @@
-import { Diameter, Sun, Moon } from "lucide-react";
+import { Diameter, Sun, Moon, Smartphone, LaptopMinimal } from "lucide-react";
+import type { Theme } from "../types";
 
-type Theme = "light" | "dark";
 type HeaderProps = {
   theme: Theme;
   isMobile: boolean;
@@ -22,21 +22,25 @@ export default function Header({
         <h1 className="text-xl font-semibold">Acme Corp</h1>
       </div>
 
-      {theme === "dark" ? (
-        <button
-          className="flex active:scale-95"
-          onClick={() => onToggleTheme("light")}
-        >
-          <Moon />
-        </button>
-      ) : (
-        <button
-          className="flex active:scale-95"
-          onClick={() => onToggleTheme("dark")}
-        >
-          <Sun />
-        </button>
-      )}
+      <div className="flex gap-2">
+        {isMobile ? <Smartphone /> : <LaptopMinimal />}
+
+        {theme === "dark" ? (
+          <button
+            className="flex active:scale-95"
+            onClick={() => onToggleTheme("light")}
+          >
+            <Moon />
+          </button>
+        ) : (
+          <button
+            className="flex active:scale-95"
+            onClick={() => onToggleTheme("dark")}
+          >
+            <Sun />
+          </button>
+        )}
+      </div>
     </header>
   );
 }
