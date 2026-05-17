@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import UserDashboardLayout from "./components/UserDashboardLayout";
-import UserProfileCard from "./components/UserProfileCard";
+import UserProfileCard, { type APIType } from "./components/UserProfileCard";
 
 function App() {
-  const [user, setUser] = useState();
-  const [isLoading, setLoading] = useState(false);
+  const [user, setUser] = useState<APIType | null>(null);
+  const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -18,7 +18,7 @@ function App() {
           throw new Error("Fail to fetch data from api");
         }
 
-        const user = await response.json();
+        const user: APIType = await response.json();
         setUser(user);
       } catch (error: unknown) {
         console.error(error);
@@ -40,7 +40,12 @@ function App() {
 
   return (
     <UserDashboardLayout>
-      <UserProfileCard />
+      <UserProfileCard
+        isEmpty={false}
+        isError={error}
+        isLoading={isLoading}
+        user={user}
+      />
     </UserDashboardLayout>
   );
 }
