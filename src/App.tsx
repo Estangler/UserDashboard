@@ -2,11 +2,22 @@ import { useEffect, useState } from "react";
 import UserDashboardLayout from "./components/UserDashboardLayout";
 import UserProfileCard, { type APIType } from "./components/UserProfileCard";
 
+type Theme = "light" | "dark";
+
 function App() {
   const [user, setUser] = useState<APIType | null>(null);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [theme, setTheme] = useState<Theme>(() => {
+    const theme = localStorage.getItem("theme");
+
+    if (!theme) {
+      return "dark";
+    }
+
+    return JSON.parse(theme);
+  });
 
   useEffect(() => {
     async function fetcher(url: string) {
@@ -38,8 +49,16 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("theme", JSON.stringify(theme));
+  }, [theme]);
+
   return (
-    <UserDashboardLayout>
+    <UserDashboardLayout
+      theme={theme}
+      onToggleTheme={setTheme}
+      isMobile={isMobile}
+    >
       <UserProfileCard
         isEmpty={false}
         isError={error}
